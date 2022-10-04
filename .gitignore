@@ -10,6 +10,14 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+#idea
+.idea
+
+#gradle
+.gradle
+.DS_Store
+build
+
 # Package Files #
 *.jar
 *.war
