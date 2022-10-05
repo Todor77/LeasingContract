@@ -1,4 +1,4 @@
-package allange.contract.leasing;
+package allane.contract.leasing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

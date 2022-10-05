@@ -1,4 +1,4 @@
-package allange.contract.leasing;
+package allane.contract.leasing;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
