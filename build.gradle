@@ -15,7 +15,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+//    implementation group: 'org.flywaydb', name: 'flyway-core', version: '8.2.0'
+
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
