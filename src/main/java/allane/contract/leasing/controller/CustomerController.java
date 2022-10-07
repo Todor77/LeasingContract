@@ -1,7 +1,6 @@
 package allane.contract.leasing.controller;
 
 import allane.contract.leasing.model.Customer;
-import allane.contract.leasing.model.LeasingContract;
 import allane.contract.leasing.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
