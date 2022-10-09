@@ -24,6 +24,18 @@ public class Vehicle {
     @Column(name = "vin")
     private String vin;
 
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    @Column(name = "available" )
+    private Boolean available = true;
+
+
     public Long getId() {
         return id;
     }

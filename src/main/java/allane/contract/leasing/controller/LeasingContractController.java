@@ -1,7 +1,9 @@
 package allane.contract.leasing.controller;
 
+import allane.contract.leasing.model.Customer;
 import allane.contract.leasing.model.LeasingContract;
 import allane.contract.leasing.model.Vehicle;
+import allane.contract.leasing.service.CustomerService;
 import allane.contract.leasing.service.LeasingContractService;
 import allane.contract.leasing.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class LeasingContractController {
 
     @Autowired
     VehicleService vehicleService;
+
+    @Autowired
+    CustomerService customerService;
 
     @GetMapping("/leasingContracts")
     public List<LeasingContract> getLeasingContracts() {
@@ -45,11 +50,20 @@ public class LeasingContractController {
             LeasingContract newleasingContract = new LeasingContract();
             newleasingContract.setContractNumber(leasingContract.getContractNumber());
             newleasingContract.setMonthlyRate(leasingContract.getMonthlyRate());
+            newleasingContract.setCustomer(leasingContract.getCustomer());
 
-            Optional<Vehicle> vehicle = vehicleService.findVehicleById(leasingContract.getVehicle().getId());
+            Optional<Vehicle> optionalVehiclevehicle = vehicleService.findVehicleById(leasingContract.getVehicle().getId());
+            Optional<Customer> optionalCustomer = customerService.findCustomerById(leasingContract.getCustomer().getId());
 
-            if(vehicle.isPresent()) {
-                newleasingContract.setVehicle(vehicle.get());
+            Vehicle vehicle = optionalVehiclevehicle.get();
+            vehicle.setAvailable(false);
+
+            if(optionalVehiclevehicle.isPresent()) {
+                newleasingContract.setVehicle(vehicle);
+            }
+
+            if(optionalCustomer.isPresent()) {
+                newleasingContract.setCustomer(optionalCustomer.get());
             }
 
             LeasingContract _leasingContract = leasingContractService.createOrUpdate(newleasingContract);
@@ -69,7 +83,10 @@ public class LeasingContractController {
             _leasingContract.setContractNumber(leasingContract.getContractNumber());
             _leasingContract.setMonthlyRate(leasingContract.getMonthlyRate());
             _leasingContract.setCustomer(leasingContract.getCustomer());
-            _leasingContract.setVehicle(leasingContract.getVehicle());
+            Vehicle vehicle = leasingContract.getVehicle();
+            vehicle.setAvailable(false);
+            _leasingContract.setVehicle(vehicle);
+
             return new ResponseEntity<>(leasingContractService.createOrUpdate(_leasingContract), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

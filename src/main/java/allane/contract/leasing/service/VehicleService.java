@@ -24,7 +24,7 @@ public class VehicleService {
         return vehicleRepository.findById(id);
     }
 
-    public Vehicle create(Vehicle vehicle) {
+    public Vehicle createOrUpdate(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
     }
 

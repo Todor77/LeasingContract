@@ -1,7 +1,9 @@
 package allane.contract.leasing.controller;
 
-import allane.contract.leasing.model.Customer;
+import allane.contract.leasing.model.Brand;
+import allane.contract.leasing.model.Model;
 import allane.contract.leasing.model.Vehicle;
+import allane.contract.leasing.service.BrandVehicleService;
 import allane.contract.leasing.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
+
+    @Autowired
+    private BrandVehicleService brandVehicleService;
 
     @GetMapping("/vehicles")
     public List<Vehicle> getVehicles() {
@@ -38,14 +43,25 @@ public class VehicleController {
     @PostMapping("/vehicles")
     public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
         try {
+            Optional<Brand> brand = brandVehicleService.findBrandById(Long.parseLong(vehicle.getBrand()));
+
             Vehicle newVehicle = new Vehicle();
-            newVehicle.setBrand(vehicle.getBrand());
-            newVehicle.setModel(vehicle.getModel());
+
+            //I know that is not the smartest solution,
+            if(brand.isPresent()) {
+                newVehicle.setBrand(brand.get().getName());
+
+                for(Model model : brand.get().getModels()) {
+                    if(model.getId().toString().equals(vehicle.getModel())) {
+                        newVehicle.setModel(model.getName());
+                    }
+                }
+            }
             newVehicle.setVin(vehicle.getVin());
             newVehicle.setPrice(vehicle.getPrice());
             newVehicle.setYear(vehicle.getYear());
 
-            Vehicle _vehicle = vehicleService.create(newVehicle);
+            Vehicle _vehicle = vehicleService.createOrUpdate(newVehicle);
 
             return new ResponseEntity<>(_vehicle, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -64,7 +80,7 @@ public class VehicleController {
             _vehicle.setYear(vehicle.getYear());
             _vehicle.setVin(vehicle.getVin());
             _vehicle.setPrice(vehicle.getPrice());
-            return new ResponseEntity<>(vehicleService.create(_vehicle), HttpStatus.OK);
+            return new ResponseEntity<>(vehicleService.createOrUpdate(_vehicle), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
