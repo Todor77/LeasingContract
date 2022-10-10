@@ -4,9 +4,6 @@
 -- ------------------------------------------------------
 -- Server version	5.5.59-MariaDB
 
-create schema leasing_db CHARACTER SET utf8
-    COLLATE utf8_general_ci;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -18,11 +15,13 @@ create schema leasing_db CHARACTER SET utf8
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-use leasing_db;
-
+create schema leasing_db CHARACTER SET utf8
+    COLLATE utf8_general_ci;
 --
 -- Table structure for table `brand`
 --
+use leasing_db;
+
 DROP TABLE IF EXISTS `brand`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -30,7 +29,7 @@ CREATE TABLE `brand` (
                          `id` bigint(20) NOT NULL,
                          `name` varchar(255) DEFAULT NULL,
                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,12 +50,12 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
-                            `id` bigint(20) NOT NULL,
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
                             `birth_date` datetime(6) DEFAULT NULL,
                             `first_name` varchar(255) DEFAULT NULL,
                             `last_name` varchar(255) DEFAULT NULL,
                             PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +77,7 @@ DROP TABLE IF EXISTS `hibernate_sequence`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hibernate_sequence` (
     `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,11 +104,11 @@ CREATE TABLE `leasing_contract` (
                                     `customer_id` bigint(20) DEFAULT NULL,
                                     `vehicle_id` bigint(20) DEFAULT NULL,
                                     PRIMARY KEY (`id`),
-                                    UNIQUE KEY `uk_vehicle` (`vehicle_id`),
                                     KEY `FKpxeeq63s4vh9272vr2tipsh2s` (`customer_id`),
+                                    KEY `FKqpkf9hkk4ps9mg91ifuc16qni` (`vehicle_id`),
                                     CONSTRAINT `FKqpkf9hkk4ps9mg91ifuc16qni` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`),
                                     CONSTRAINT `FKpxeeq63s4vh9272vr2tipsh2s` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +135,7 @@ CREATE TABLE `model` (
                          PRIMARY KEY (`id`),
                          KEY `FKhbgv4j3vpt308sepyq9q79mhu` (`brand_id`),
                          CONSTRAINT `FKhbgv4j3vpt308sepyq9q79mhu` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +156,7 @@ DROP TABLE IF EXISTS `vehicle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vehicle` (
-                           `id` bigint(20) NOT NULL,
+                           `id` bigint(20) NOT NULL AUTO_INCREMENT,
                            `available` bit(1) DEFAULT NULL,
                            `brand` varchar(255) DEFAULT NULL,
                            `model` varchar(255) DEFAULT NULL,
@@ -165,7 +164,7 @@ CREATE TABLE `vehicle` (
                            `vin` varchar(255) DEFAULT NULL,
                            `year` int(11) DEFAULT NULL,
                            PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-09 22:17:50
+-- Dump completed on 2022-10-10 21:19:29
