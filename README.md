@@ -1,4 +1,13 @@
-## LeasingContract
+#### LeasingContract
+#Info:
+Important : Flyway is not working because of not supporting specific verisons,
+ I’ve tried two and didn’t work. So decides to go on .
+  I have added the whole configuration but It doesen't migrate because of not
+   supported versions. So I added some ways how to create and import some data.
+
+Junit – there was not time to write it . I could and would write .
+Open Api – no time to implement.(optional)
+
 
 #### Prerequisits
 java 11
