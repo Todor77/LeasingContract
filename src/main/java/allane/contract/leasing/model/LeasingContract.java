@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "leasing_contract", uniqueConstraints = @UniqueConstraint(name="uk_vehicle", columnNames = {"vehicle_id"}))
+@Table(name = "leasing_contract")
 public class LeasingContract {
 
     @Id

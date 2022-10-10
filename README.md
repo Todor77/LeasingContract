@@ -13,18 +13,24 @@ MariaDB 10.7 or 5.5
  6. if any Problem concat (toshe_ilievski@hotmail.com)
 
 
-##### SetUp Tomcat and Database
+##### SetUp Database
+#1-way
+ 1. run the sql script from etc/dc/Database.sql
 
- 1. Create new db schema in your local database : leasing_db
- 2. That the Flyway is not working, import the sql form etc/db/xxx
- 3. build the Project
- 4. bootRun
- 5. app should work on localhost:8080
+#2-way
+  1. Create new db schema in your local database : leasing_db
+  2. Start the Project to create the Tables with ./gradlew bootRun
+  2. That the Flyway is not working, import the sql form etc/db/initData.sql
+
+##### Run the App
+ 1. build the Project ./gradlew build
+ 2. ./gradlew bootRun
+ 3. app should work on localhost:8080
 
 
-###FlyWay
-Flyway migration is not working because of incompatible versions with mariadb , so i've tryed with 5.5 , and 10.9 and it
-wasn't starting because of not supported db, so decided to continue without . Hope makes no big minus in my applicaiton :)
+###FlyWay Is Not Working
+Flyway migration is not working because of incompatible versions with mariadb , so i've tryed with 5.5 , and 10.7 and it
+wasn't starting because of not supported db, so decided to continue without.
 
 
 

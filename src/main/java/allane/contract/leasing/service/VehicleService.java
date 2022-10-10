@@ -28,4 +28,8 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+    public Vehicle findVehiclesByBrandAndAndModel(String brand, String model) {
+        return vehicleRepository.findVehiclesByBrandAndAndModel(brand, model);
+    }
+
 }

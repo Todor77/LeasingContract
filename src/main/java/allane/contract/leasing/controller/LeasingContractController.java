@@ -83,11 +83,22 @@ public class LeasingContractController {
             _leasingContract.setContractNumber(leasingContract.getContractNumber());
             _leasingContract.setMonthlyRate(leasingContract.getMonthlyRate());
             _leasingContract.setCustomer(leasingContract.getCustomer());
-            Vehicle vehicle = leasingContract.getVehicle();
-            vehicle.setAvailable(false);
-            _leasingContract.setVehicle(vehicle);
 
-            return new ResponseEntity<>(leasingContractService.createOrUpdate(_leasingContract), HttpStatus.OK);
+            //i know it is not nice writen but, those changes are made the last day, and is better to be working,
+            Optional<Vehicle> optionalVehiclevehicle = vehicleService.findVehicleById(leasingContract.getVehicle().getId());
+            Vehicle vehiclesByBrandAndAndModel = vehicleService.findVehiclesByBrandAndAndModel(leasingContract.getVehicle().getBrand(), leasingContract.getVehicle().getModel());
+
+            vehiclesByBrandAndAndModel.setAvailable(false);
+            _leasingContract.setVehicle(vehiclesByBrandAndAndModel);
+
+
+            ResponseEntity<LeasingContract> leasingContractResponseEntity = new ResponseEntity<>(leasingContractService.createOrUpdate(_leasingContract), HttpStatus.OK);
+           if(leasingContractResponseEntity.getStatusCode().is2xxSuccessful()) {
+               Vehicle updateOldVehicle = vehicleService.findVehiclesByBrandAndAndModel(optionalVehiclevehicle.get().getBrand(), optionalVehiclevehicle.get().getModel());
+               updateOldVehicle.setAvailable(true);
+               vehicleService.createOrUpdate(updateOldVehicle);
+           }
+            return leasingContractResponseEntity;
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
